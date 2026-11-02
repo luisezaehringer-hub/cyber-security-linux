@@ -50,6 +50,7 @@ https://open.spotify.com/episode/1Qi0sKWzT0lBKuSWtEPulo
     
 # d) Debian
 I downloaded Debian on my laptop.
+
 <img width="312" height="148" alt="image" src="https://github.com/user-attachments/assets/20c0b92e-fb7c-42ba-8897-e8b119870926" />
 
 
