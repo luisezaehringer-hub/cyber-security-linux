@@ -48,5 +48,8 @@ https://open.spotify.com/episode/1Qi0sKWzT0lBKuSWtEPulo
     The study discusses the far-reaching operational, legal, and psychological consequences of security and incident management failures for those affected.
     In this case in the example, the complete failure of the oversight authorities led to extreme human and legal consequences (including the wrongful conviction and commitment of the real William Woods to a psychiatric hospital). Only modern forensic methods (such as DNA analysis) brought the truth to light, similar to how digital forensics is used to investigate cyberattacks.
     
+# d) Debian
+I downloaded Debian on my laptop.
+<img width="312" height="148" alt="image" src="https://github.com/user-attachments/assets/20c0b92e-fb7c-42ba-8897-e8b119870926" />
 
 
