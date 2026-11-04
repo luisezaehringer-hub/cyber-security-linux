@@ -52,6 +52,8 @@ I installed Linux through UCM. Debian 13-Trixie took some time to install it and
 
 
 <img width="882" height="590" alt="image" src="https://github.com/user-attachments/assets/1823a6d0-338d-41bd-a5e6-785438ac6008" />
-further information can be found in my h2-scene report: 
+
+further information can be found in my h2-scene report: https://github.com/luisezaehringer-hub/cyber-security-linux/blob/main/h2-scene.md
+
 # c) crack
 
