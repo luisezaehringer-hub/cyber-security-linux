@@ -54,6 +54,6 @@ I downloaded Debian on my laptop.
 <img width="312" height="148" alt="image" src="https://github.com/user-attachments/assets/20c0b92e-fb7c-42ba-8897-e8b119870926" />
 
 # e) Installation of Debian 13-Trixie Linux on a virtual machine
-I installed on UTM the Debian 13-Trixie Linux on a virtual machine
+I installed on UTM the Debian 13-Trixie Linux on a virtual machine.
 It took quite some time, but is now working.
 <img width="884" height="595" alt="image" src="https://github.com/user-attachments/assets/5ef94a5e-3954-4d97-a514-8ae612e6b296" />
