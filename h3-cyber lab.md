@@ -56,4 +56,4 @@ I installed Linux through UCM. Debian 13-Trixie took some time to install it and
 further information can be found in my h2-scene report: https://github.com/luisezaehringer-hub/cyber-security-linux/blob/main/h2-scene.md
 
 # c) crack
-This was quite challenging, since my terminal didnt accept some of the commands. With a bit of trying out and taking some time, I could get my terminal to running all the commands. 
+This was quite challenging, since my terminal didnt accept some of the commands. With a bit of trying out and taking some time, I could get my terminal to running all the commands. The problems were mostly because of my operating system (Mac). 
