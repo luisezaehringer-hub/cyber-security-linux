@@ -36,6 +36,8 @@ Karvinen 2022: https://terokarvinen.com/2022/cracking-passwords-with-hashcat/
      
      <img width="748" height="224" alt="image" src="https://github.com/user-attachments/assets/2527801b-a2d3-4d95-9d4b-0f329c0850a7" />
 
+     -> its hard to insert here own ideas, since the commands dont let creativity flow...
+
 ## Summary Article 2: Cracking Passwords with Hashcat
 The article gently introduces to the process of cracking a password. The solution is already provided, so you can first experiment with the environment at your own pace and work through the individual steps. The first step is installing Hashcat, then creating a directory for our case. Step two is to identify the Hash Type, this can be done through a hash cat parameter within the command. The hash can now be cracked, based on the hash type. The table helps to understand the meaning of the result.
 
