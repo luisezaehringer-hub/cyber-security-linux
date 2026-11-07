@@ -59,3 +59,21 @@ further information can be found in my h2-scene report: https://github.com/luise
 
 # c) crack
 This was quite challenging, since my terminal didnt accept some of the commands. With a bit of trying out and taking some time, I could get my terminal to running all the commands. The problems were mostly because of my operating system (Mac). 
+### 1. Installing hash cat:
+<img width="568" height="150" alt="image" src="https://github.com/user-attachments/assets/9d6072e2-0df1-4bbb-bc3a-b4580b9b6adc" />
+
+### 2. getting the big dictionary (rockyou):
+<img width="759" height="280" alt="image" src="https://github.com/user-attachments/assets/69dae871-a986-4716-a668-d398bc30b621" />
+
+### 3. output result:
+<img width="489" height="271" alt="image" src="https://github.com/user-attachments/assets/bb56618b-681b-40dc-a7c3-2ad355217326" />
+
+### 4. Identfying the Hashcode:
+<img width="648" height="378" alt="image" src="https://github.com/user-attachments/assets/8968dc64-e29b-4318-8c53-03fb84dc76e5" />
+
+### 5. result of password:
+<img width="733" height="65" alt="image" src="https://github.com/user-attachments/assets/245774fb-66ad-4c4d-9d57-3b8caf1e9181" />
+
+
+### 6. what did Hashcat say?:
+<img width="728" height="195" alt="image" src="https://github.com/user-attachments/assets/a49ea2b8-116b-4534-a628-1d30ed0f57bd" />
