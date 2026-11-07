@@ -47,6 +47,10 @@ After that, Hashcat generates a report on that case, that shows the output. The 
 
 # a) See Laksu
 
+My presentation is about Encryption and Key Management. My working title is the following: Cost of a lost key: Managing Regulatory & Financial Risks in Data Protection.
+
+I especially like this topic, since it has some strong dimensions to my work and can be applied to a wide range of jobs. 
+
 # b) Install Linux on a virtual machine. Use Debian 13-Trixie
 I installed Linux through UCM. Debian 13-Trixie took some time to install it and I wasn't quite sure if it ran correctly in the beginning. Now it looks fine. The Installing process was kind of easy, even though I dont really have that much of experience in running that process. Lastly, I created a VM.
 
