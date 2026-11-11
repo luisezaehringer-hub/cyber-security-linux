@@ -4,7 +4,7 @@ For this, the following source summed it up. "An RSS reader is an app that colle
 Instead of visiting each site to see what is new, you follow it once, and new posts come to you. 
 RSS readers are also called feed readers, news readers or RSS aggregators" (cf. feeder, 2026). 
 A feed reader will tell you the most important news like in a summary, so you will safe time by not having to browse through every webpage, podcast etc. 
-You will get automatic notifications to news, all new content is collected in one place and it can be anonymous, since you dont have to provide personal data for a subscription (cf. TIB Open Publishing , n.d.). 
+You will get automatic notifications to news, all new content is collected in one place and it can be anonymous, since you dont have to provide personal data for a subscription (cf. ISEC, n.d.). 
 These are only three of many other benefits of a feed reader.
 
 ## The other benefits can be summarized with the following points:
