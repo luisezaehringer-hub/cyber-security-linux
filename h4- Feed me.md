@@ -80,6 +80,115 @@ My learnings through this: Its much easier then firstly anticipated. Before this
 
 Some benefits are definitely the efficiency behind it, since I dont have to do my own research on topics. And since there are now algorithms in the background, like on social media, this is more about my personal interests and my active subscriptions. 
 
+In comparison to other Articles with comments on it, the feed lacks of discussions or other opinions besides the opinion of the writer. It can also quickly can become a bit to much with the amount of news and articles, so maybe its best to have a specific amount of feeds connected instead of following everything that comes to your mind. This won't overwhelm as fast as going through every new article and trying to stay up to date with everything.
+When it comes to longterm facts, RSS is a bit more effort compared toi a social media account. Unlike the social media account, you cant just follow some hashtags or accounts (mostly), if you do your research for URL and so on, it might take a bit of time. 
+
+# f) port scan:
+1) I started downloading nmap port scanner in UTM Debian.
+   
+The following were my commands:
+
+sudo apt update
+
+sudo apt install -y nmap nginx
+
+<img width="748" height="291" alt="image" src="https://github.com/user-attachments/assets/d595de37-abb8-4d04-b298-c7bdff606921" />
+
+The package got installed as seen in the Screenshot provided above. Multiple packages got preconfigured.
+
+<img width="722" height="119" alt="image" src="https://github.com/user-attachments/assets/d1ac794b-f6b4-4528-825f-9fa3e732dcea" />
+
+For shutting down the connection in my vm, I used these commands:
+
+ip link
+
+sudo ip link set enp0s1 down
+
+<img width="321" height="132" alt="image" src="https://github.com/user-attachments/assets/4c91e57c-12a7-4b33-bb79-98b4b2caa462" />
+
+"ping 8.8.8.8" is unreachable as it can be seen in the screenshot underneath
+
+<img width="384" height="37" alt="image" src="https://github.com/user-attachments/assets/087a9656-e9ed-4579-8aa8-b1455f09f273" />
+
+- port scan your own computer:
+  command: nmap localhost
+  result: the port scan has been successful!
+  Open ports:
+  22/tcp (SSH)
+  80/tcp (HTTP – this is your installed web server/daemon)
+  631/tcp (IPP – printer service)
+  Closed ports: 997 other standard ports are closed because
+  no services are running on them.
+
+  <img width="796" height="267" alt="image" src="https://github.com/user-attachments/assets/d4ff9805-1ab9-4564-9453-75c63cb7e1c6" />
+
+ - install daemon:
+    command: sudo systemctl start nginx (to start the web server   daemon immediately)
+
+    sudo systemctl status nginx (to check whether the daemon is currently running)
+
+    <img width="804" height="389" alt="image" src="https://github.com/user-attachments/assets/9ac28760-5615-4c8c-bcd7-d1e1ae1899fc" />
+
+In the output, you can now see the green marker with the status “active (running).”
+
+- Running the port scan again:
+  
+command: nmap localhost
+This shows the list of the open ports, 80/tcp open http is the port of my daemon, which is listed now. The status "open" shows, that the service is available and waiting for requests. 
+
+
+  <img width="803" height="230" alt="image" src="https://github.com/user-attachments/assets/31461c64-6e33-40ad-99de-eb63bdb439d5" />
+
+The port scan was therefore successful, since the port is now displayed. 
+
+- analysis and explanation:
+  
+Initial Situation (Isolated System): By disabling the network interface (ip link set enp0s1 down) and verifying this via ping 8.8.8.8, I ensured that the virtual machine was completely offline and had no connection to the Internet or external networks.
+The localhost scan: The scan of the loopback address (127.0.0.1) revealed which services are accessible internally on the computer.
+The Daemon Effect: After starting the daemon (nginx), port 80/tcp (open, HTTP) appeared in the nmap table. This proves that a port scan directly reflects which software services are actively listening for requests in the background.
+
+# How can criminals know what services your employer has?
+To answer this question, the exercise showed how criminals might operate: Attackers use these scans to find open ports (services) on the network. Each open port (such as port 80 or 22) represents a program that is waiting for requests.
+Security risk: If a service is running outdated software with known security vulnerabilities, attackers can exploit them in a targeted manner (as was deemed to constitute unauthorized access or an attempted break-in in the Finnish court ruling in Subtask y).
+
+# g) Voluntary bonus: Identifying a port scan against Apache
+Since the Internet connection has already been disconnected and "nmap localhost" has been run, you can check the log files directly to see if and what the web server detected from the scan.
+
+1) Access to the web server logs (Nginx or Apache). Since I used nginx before, I look at the Nginx logs first.
+command:
+sudo tail -n 50 /var/log/nginx/access.log
+sudo tail -n 50 /var/log/nginx/error.log
+
+I had a typo in my command, so I had to correct this in an extra step with the following command: 
+sudo tail -n 50 /var/log/nginx/error.log
+
+<img width="762" height="154" alt="image" src="https://github.com/user-attachments/assets/79a9cbaa-49db-42bb-bbe9-6bac1c5f9481" />
+
+This shows now, that the log.entry in the terminal is shown here. The entry shown (using inherited sockets from “5;6;”) originates from the start of the Nginx web server. It simply indicates that the daemon started successfully and has taken over the corresponding network interfaces.
+
+2) targeted port scan.
+
+command: nmap -p 80 localhost
+
+
+<img width="801" height="225" alt="image" src="https://github.com/user-attachments/assets/8899e9a6-f3ad-4377-9aef-21b44277da80" />
+
+This is practical proof that the port scan was successful while the system was completely isolated offline: It was thus verified locally that the service is accessible without any data leaving the system or requiring an Internet connection.
+
+3) Checking the logs
+
+commands:
+sudo tail -n 50 /var/log/nginx/access.log
+sudo tail -n 50 /var/log/nginx/error.log
+
+<img width="762" height="156" alt="image" src="https://github.com/user-attachments/assets/126e86d7-08f4-4948-8f09-048ee0c5297c" />
+
+results:
+access.log (above): The output remains empty because a standard nmap port scan operates at another level (transport layer) and does not send a real HTTP request (application layer) to the web server. From the web server's perspective, therefore, no page is being accessed, which is why nothing appears in the access log.
+error.log (unten): Hier taucht lediglich die Startmeldung des Nginx-Daemons auf (using inherited sockets from "5;6;"), jedoch keinerlei Hinweise auf den Scan.
+
+To be honest, this task was not easy for me since I didnt understand what the output of this task is supposed to give as a result. So it wasn't as clear to intepretate the results as, for example, in the exercise from before. I am still not sure if I did it correctly or if something still is missing and needs to be done.
+    
 # Sources:
 
 feeder, (2026). What is an RSS reader? How feed readers work. 
