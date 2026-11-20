@@ -219,6 +219,69 @@ Both entries (email/personal and university/portal) are now securely stored in t
 
 When users do not use a password manager, they often rely on weak, predictable passwords and reuse the same credentials across multiple accounts, making them vulnerable to credential stuffing, brute-force, and password spraying attacks. Additionally, manually typing passwords from memory exposes users to phishing attacks on lookalike domains—whereas a password manager's autofill only triggers on the exact legitimate URL—and storing passwords in unencrypted notes or spreadsheets leaves them open to local plaintext theft by malware or unauthorized local access.
 
+# d) Voluntary: Details of PGP
+
+1. Set Up Separate Folders & Keyrings for Two Users
+Creation of two isolated directories (~/alice and ~/bob) so each party has its own files and its own --homedir keyring
+
+command:
+
+mkdir -p ~/alice/gnupg ~/bob/gnupg
+chmod 700 ~/alice/gnupg ~/bob/gnupg
+
+2. Generation of a Second Key Pair for the Other Party (bob)
+Keeping my existing (luise@debian) identity as the sender (alice), and generating a key pair for the recipient (bob) in Bob's separate keyring
+
+gpg --homedir ~/bob/gnupg --full-generate-key
+
+<img width="672" height="290" alt="image" src="https://github.com/user-attachments/assets/47657677-33b0-4e7a-88df-f73bc5ad624a" />
+
+Choosing ECC and ECC (Curve 25519) and set an expiration/name such as bob <bob@debian> with a passphrase
+
+<img width="798" height="396" alt="image" src="https://github.com/user-attachments/assets/626a47b7-63a0-4ba4-8b62-62fffcdde461" />
+
+3. Exchange Public Keys (Out-of-Band Simulation)
+
+Export Bob's public key and import it into Alice's keyring
+gpg --homedir ~/bob/gnupg --armor --export bob@debian > ~/bob/bob.pub.asc
+gpg --homedir ~/alice/gnupg --import ~/bob/bob.pub.asc
+
+Export Luise's public key from your existing keyring and import it into Bob's keyring
+gpg --armor --export luise@debian > ~/alice/luise.pub.asc
+gpg --homedir ~/bob/gnupg --import ~/alice/luise.pub.asc
+
+<img width="797" height="249" alt="image" src="https://github.com/user-attachments/assets/e3525277-3508-4dab-b7fb-020326254c0c" />
+
+4. Alice Creates, Signs, and Encrypts a Message for Bob
+Creating a message in ~/alice/message.txt, then sign it with Alice's (luise@debian) private key and encrypt it with Bob's (bob@debian) public key:
+
+command:
+
+echo "Secret lab note from Luise to Bob." > ~/alice/message.txt
+
+gpg --homedir ~/alice/gnupg --armor --sign --encrypt \
+  --local-user luise@debian \
+  --recipient bob@debian \
+  --output ~/bob/incoming.asc \
+  ~/alice/message.txt
+
+<img width="805" height="309" alt="image" src="https://github.com/user-attachments/assets/ffc4d921-4d39-4f91-91d3-230de99b9c6e" />
+
+command:
+
+1. Import Luise's Public Key into Bob's Keyring
+   
+gpg --armor --export luise@debian > ~/alice/luise.pub.asc && gpg --homedir ~/bob/gnupg --import ~/alice/luise.pub.asc
+
+2. Decrypt and Verify the Message as Bob
+
+gpg --homedir ~/bob/gnupg --decrypt ~/bob/incoming.asc > ~/bob/decrypted_message.txt && cat ~/bob/decrypted_message.txt
+
+<img width="803" height="417" alt="image" src="https://github.com/user-attachments/assets/b2ad4335-c614-4054-8efa-ff20a12f01a7" />
+
+
+Encryption and signing succeeded—after confirming y, GnuPG created ~/bob/incoming.asc using bob <bob@debian>'s cv25519 encryption subkey and luise <luise@debian>'s signing key.
+
 ## Sources:
 
 Schneier (2015): Applied Cryptography: Protocols, Algorithms and Source Code in C, 20th Anniversary Edition
