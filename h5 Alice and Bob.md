@@ -115,9 +115,40 @@ The HTTP/2 200 status code confirms that your virtual machine is now fully conne
 Step 1: Create a Test File
 
 command:
- echo "This is a secret message for my homework." > secret.txt
+echo "This is a secret message for my homework." > secret.txt
 
------hier noch die restlichen schritte einfügen----
+cat secret.txt
+
+Step 2: Generate own GPG Key Pair
+
+command:
+gpg --full-generate-key
+
+Selections in the assistant:
+By default, RSA and RSA (Option 1).
+Select the key length (e.g., 3072 or 4096 bits).
+Specify how long the key should be valid (in this case, I entered 0 for unlimited).
+Enter your name and email address, then confirm by pressing O (OK).
+Create a secure passphrase (password) for the private key.
+
+gpg --list-keys (this is for reassurance)
+
+Step 3: Encrypt and sign the file
+
+gpg --armor --sign --encrypt --recipient luise@debian secret.txt
+
+Step 4: Inspect or Decrypt the Result
+
+command:
+
+cat secret.txt.asc (View the contents of the encrypted file)
+
+gpg --decrypt secret.txt.asc > decrypted.txt (To decrypt the file and verify the signature)
+
+<img width="471" height="32" alt="image" src="https://github.com/user-attachments/assets/dcc0ad30-b3e5-46f8-a5bf-7eee1d46f3bb" />
+
+as seen above, the message could successfully been decrypted!
+
 
 Passkey for the installation of the key pair:
 
@@ -138,6 +169,56 @@ cat restored.txt (verification of the initial message)
 
 This task took a little longer because things didn't always work the first time I entered them, so I had to use additional commands. However, it was also kind of fun to see how it works in practice.
 
+How different parties use different keys at different stages of operation:
+In public-key cryptography, such as GnuPG / OpenPGP, confidentiality (encryption) and authenticity/integrity (digital signatures) rely on distinct keys used by different parties at different stages. Each party holds a private key (kept secret) and a public key (shared openly).
+Each party holds a private key that stays secret and a public key that is shared openly, and different keys are used depending on whether a message is being kept confidential or authenticated. When Alice wants to send a secret message to Bob, she encrypts it using Bob’s public key so that only Bob can decrypt it using Bob’s private key. To prove that the message genuinely came from her and wasn't altered, Alice signs it using Alice’s private key, allowing Bob to verify the signature with Alice’s public key. When both signing and encrypting are combined, Alice signs with her own private key and encrypts with Bob's public key, while Bob first decrypts with his private key and then verifies the signature with Alice's public key (cf. GNU Privacy Handbook, n.d).
+
+Evaluation of the chosen security tool:
+For a learning and lab environment on a local VM, GnuPG with Curve 25519 is well-suited and cryptographically strong for demonstrating encryption, signing, decryption, and signature verification. For real-world production or sensitive data, security also depends on keeping software patched, protecting the private key (ideally with a strong passphrase and/or hardware token), and verifying recipients' key fingerprints out-of-band
+
+# c) Password management
+
+Demonstration of the use of a password manager:
+Updating the package list and installing "pass"
+
+commands:
+
+apt update && apt install -y pass
+
+<img width="583" height="403" alt="image" src="https://github.com/user-attachments/assets/b73c9c38-6581-4975-88f8-86d2fabd4cd9" />
+
+Initializing the Password Store with my GPG Key
+
+Linking "pass" to my existing GPG identity so all stored passwords are encrypted with my public key:
+
+pass init luise@debian
+
+<img width="506" height="75" alt="image" src="https://github.com/user-attachments/assets/f62300c1-4517-45bf-b8b1-3f02bee1a686" />
+
+verification can be seen here (password store initialized for luisedebian)
+
+Generation and Store a Strong Random Password
+
+command:
+pass generate university/portal 20
+
+<img width="509" height="112" alt="image" src="https://github.com/user-attachments/assets/cf491b85-da94-4803-9c4b-ca885008bced" />
+
+A newly generated 20-character password is displayed in the terminal and stored in encrypted form.
+
+command:
+
+pass insert email/personal
+
+<img width="425" height="195" alt="image" src="https://github.com/user-attachments/assets/38cfba82-fa38-4745-8ab9-4f001889d88c" />
+
+Both entries (email/personal and university/portal) are now securely stored in the Password Store.
+
+
+- What kind of attacks take advantage of people not using password managers?
+
+When users do not use a password manager, they often rely on weak, predictable passwords and reuse the same credentials across multiple accounts, making them vulnerable to credential stuffing, brute-force, and password spraying attacks. Additionally, manually typing passwords from memory exposes users to phishing attacks on lookalike domains—whereas a password manager's autofill only triggers on the exact legitimate URL—and storing passwords in unencrypted notes or spreadsheets leaves them open to local plaintext theft by malware or unauthorized local access.
+
 ## Sources:
 
 Schneier (2015): Applied Cryptography: Protocols, Algorithms and Source Code in C, 20th Anniversary Edition
@@ -153,3 +234,5 @@ https://www.w3.org/TR/webauthn-3/
 EMVCo (n.d.). EMV® Contactless Chip. https://www.emvco.com/emv-technologies/emv-contactless-chip/
 
 Signal (2016). The X3DH Key Agreement Protocol. https://signal.org/docs/specifications/x3dh/
+
+The GNU privacy Handbook (n.d.). https://www.gnupg.org/gph/en/manual.html 
